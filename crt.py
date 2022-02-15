@@ -3,12 +3,12 @@
 import sys
 import requests
 import subprocess
+import json
 import argparse
 
 def get_args():
 	parser = argparse.ArgumentParser("crt.py -t <organizarion name or domain> , crt.py will fetch target data from crt.sh and print in json format\ntip:use with tomnomnom tool 'gron'\nAlso you can use put Organization name in target value \n")
-	parser.add_argument('-t','--target',dest='target',help="name of target",default="False")
-	
+	parser.add_argument('-t','--target',dest='target',help="name of target[can be organization name]",default="False")
 	args = parser.parse_args()
 	return args
 
@@ -26,8 +26,8 @@ target = options.target
 
 if (options.target != "False"):
 	target=target.replace(" ","+")
-	data=request(target)
-	print(data)
+	data=json.loads(request(target))
+	print(json.dumps(data,indent =3))
 else:
 	print("specify target")
 
